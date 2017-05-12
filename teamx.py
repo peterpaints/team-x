@@ -1,4 +1,37 @@
 import sys
+from collections import OrderedDict
+
+bootcamp = {}
+
+def create_calendar():
+    name = input("Please input a name for your calendar, eg. Week 1: ")
+    bootcamp[name] = {}
+    return bootcamp
+
+
+def add_event():
+    if len(bootcamp) < 1:
+        print ("")
+        print ("There are no calendars yet. Please add a calendar!")
+        print ("")
+    else:
+        readable = {k: " ".join(v.keys()) for v in bootcamp.values() for k, v in bootcamp.items()}
+        readable = OrderedDict(sorted(readable.items()))
+
+        print ("Here are your current calendars ...")
+        print('\n'.join("{}: {}".format(k, v) for k, v in readable.items()))
+
+        event = input("Enter calendar name as it appears in the list above: ")
+        if event not in bootcamp:
+            print ("There is no such calendar! ")
+        else:
+            print ("You've selected %s" % (event))
+            print ("Let's add some To Dos!")
+            event_number = input("Enter To Do number, e.g. 1: ")
+            todo = input("Enter To Do, e.g. Learn Git: ")
+            bootcamp[event][event_number] = todo
+
+            return bootcamp
 
 
 def welcome_page():
