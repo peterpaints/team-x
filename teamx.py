@@ -21,17 +21,40 @@ def add_event():
         print ("Here are your current calendars ...")
         print('\n'.join("{}: {}".format(k, v) for k, v in readable.items()))
 
-        event = input("Enter calendar name as it appears in the list above: ")
+        event = input("Select a calendar to edit by typing it as it appears in the list above: ")
         if event not in bootcamp:
             print ("There is no such calendar! ")
         else:
+            print ("")
             print ("You've selected %s" % (event))
+            print ("")
             print ("Let's add some To Dos!")
+            print ("")
             event_number = input("Enter To Do number, e.g. 1: ")
+            print ("")
             todo = input("Enter To Do, e.g. Learn Git: ")
+            print ("")
             bootcamp[event][event_number] = todo
 
             return bootcamp
+
+def view_event():
+    if len(bootcamp) > 0 :
+        for boot in bootcamp:
+            for j in bootcamp[boot]:
+                for k in bootcamp[boot][j]:
+                    print (k, end ="" )
+    else:
+        print("There are no upcoming events")
+
+
+def view_last_event():
+	#Checks if there are any upcoming events
+	if len(bootcamp) > 0 :
+		#If there are events pulls the last event and displays it to user
+		print(format(bootcamp.popitem()))
+	else :
+		print("There are no upcoming events")
 
 
 def welcome_page():
