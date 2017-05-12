@@ -1,11 +1,16 @@
 import sys
 from collections import OrderedDict
 
-bootcamp = {}
+# bootcamp = {}
+bootcamp = []
+dicbootcamp = {}
 
 def create_calendar():
     name = input("Please input a name for your calendar, eg. Week 1: ")
-    bootcamp[name] = {}
+    name = name.lower()
+    dicbootcamp[name]= {}
+    # bootcamp[name] = {}
+    bootcamp.append(dicbootcamp)
     return bootcamp
 
 
@@ -15,18 +20,25 @@ def add_event():
         print ("There are no calendars yet. Please add a calendar!")
         print ("")
     else:
-        readable = {k: " ".join(v.keys()) for v in bootcamp.values() for k, v in bootcamp.items()}
-        readable = OrderedDict(sorted(readable.items()))
+        # readable = {k: " ".join(v.keys()) for v in bootcamp.values() for k, v in bootcamp.items()}
+        # readable = OrderedDict(sorted(readable.items()))
 
         print ("Here are your current calendars ...")
-        print('\n'.join("{}: {}".format(k, v) for k, v in readable.items()))
+        calendar_items = []
+        for calendar in bootcamp:
+            for item in calendar:
+                print (item.title())
+                calendar_items.append(item)
+        # print('\n'.join("{}: {}".format(k, v) for k, v in readable.items()))
 
-        event = input("Select a calendar to edit by typing it as it appears in the list above: ")
-        if event not in bootcamp:
+        event = input("Select a calendar to edit from the list above by typing it in: ")
+        event = event.lower()
+
+        if event not in calendar_items:
             print ("There is no such calendar! ")
         else:
             print ("")
-            print ("You've selected %s" % (event))
+            print ("You've selected %s" % (event.title()))
             print ("")
             print ("Let's add some To Dos!")
             print ("")
@@ -34,27 +46,29 @@ def add_event():
             print ("")
             todo = input("Enter To Do, e.g. Learn Git: ")
             print ("")
-            bootcamp[event][event_number] = todo
+            for calendar in bootcamp:
+                for item in calendar:
+                    if item == event:
+                        calendar[item][event_number] = todo
 
             return bootcamp
 
 def view_event():
     if len(bootcamp) > 0 :
-        for boot in bootcamp:
+        print(bootcamp)
+        """for boot in bootcamp:
             for j in bootcamp[boot]:
-                for k in bootcamp[boot][j]:
-                    print (k, end ="" )
+                # for k in bootcamp[boot][j]:
+                    print (j, end ="" )"""
     else:
         print("There are no upcoming events")
 
 
 def view_last_event():
-	#Checks if there are any upcoming events
-	if len(bootcamp) > 0 :
-		#If there are events pulls the last event and displays it to user
-		print(format(bootcamp.popitem()))
-	else :
-		print("There are no upcoming events")
+    if len(bootcamp) > 0:
+        print (bootcamp[-1])
+    else:
+        print("There are no upcoming events")
 
 
 def welcome_page():
